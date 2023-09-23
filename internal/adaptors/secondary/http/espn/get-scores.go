@@ -107,7 +107,7 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 	return score, nil
 }
 
-func (c *EspnClient) GetScore(id int) (domain.Score, error) {
+func (c *EspnClient) GetScore(match domain.Match) (domain.Score, error) {
 	url, err := url.JoinPath(baseUrl, getScorePath)
 	if err != nil {
 		return domain.Score{}, err
@@ -115,7 +115,7 @@ func (c *EspnClient) GetScore(id int) (domain.Score, error) {
 
 	req, err := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
-	q.Add("event", fmt.Sprintf("%d", id))
+	q.Add("event", fmt.Sprintf("%d", match.ID))
 	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.client.Do(req)

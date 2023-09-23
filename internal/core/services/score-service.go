@@ -1,6 +1,9 @@
 package scoreservice
 
-import "cricwatch/internal/core/ports"
+import (
+	"cricwatch/internal/core/domain"
+	"cricwatch/internal/core/ports"
+)
 
 type ScoreService struct {
 	ScoreRepo      ports.ScoreRepo
@@ -14,8 +17,8 @@ func NewScoreService(scoreRepo ports.ScoreRepo, scoreDisplayer ports.ScoreDispla
 	}
 }
 
-func (s *ScoreService) GetAndDisplayScore(id int) error {
-	score, err := s.ScoreRepo.GetScore(id)
+func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
+	score, err := s.ScoreRepo.GetScore(match)
 	if err != nil {
 		return err
 	}

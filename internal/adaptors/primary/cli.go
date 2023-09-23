@@ -3,6 +3,7 @@ package cli
 import (
 	"cricwatch/internal/adaptors/secondary/http/espn"
 	"cricwatch/internal/adaptors/secondary/terminaldisplayer"
+	"cricwatch/internal/core/domain"
 	scoreservice "cricwatch/internal/core/services"
 	"fmt"
 	"net/http"
@@ -16,10 +17,13 @@ var rootCmd = &cobra.Command{
 	Short: "Cricwatch is a CLI tool to get live cricket scores",
 	Long:  "Cricwatch is a CLI tool to get live cricket scores",
 	Run: func(cmd *cobra.Command, args []string) {
+
 		espnClient := espn.NewEspnClient(http.DefaultClient)
 		dumDisply := terminaldisplayer.NewDumbPrinter()
+
 		svc := scoreservice.NewScoreService(espnClient, dumDisply)
-		err := svc.GetAndDisplayScore(1336129)
+
+		err := svc.GetAndDisplayScore(domain.Match{ID: 1216501})
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
