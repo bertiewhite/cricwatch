@@ -17,6 +17,10 @@ func NewScoreService(scoreRepo ports.ScoreRepo, scoreDisplayer ports.ScoreDispla
 	}
 }
 
+type ScoreApplication interface {
+	GetAndDisplayScore(match domain.Match) error
+}
+
 func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	score, err := s.ScoreRepo.GetScore(match)
 	if err != nil {

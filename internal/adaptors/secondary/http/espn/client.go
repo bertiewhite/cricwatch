@@ -11,6 +11,6 @@ const (
 	someID  = "19435"
 )
 
-func NewEspnClient(client *http.Client) *EspnClient {
+func NewClient(client *http.Client) *EspnClient {
 	return &EspnClient{client}
 }
