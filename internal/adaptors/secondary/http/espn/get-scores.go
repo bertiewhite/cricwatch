@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	getScorePath                = someID + "/summary"
+	getScorePath                = cacheID + "/summary"
 	ErrUnknownResponseStructure = errors.New("unknown response structure")
 )
 
