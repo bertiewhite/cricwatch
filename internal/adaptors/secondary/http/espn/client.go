@@ -8,9 +8,9 @@ type EspnClient struct {
 
 const (
 	baseUrl = "https://site.api.espn.com/apis/site/v2/sports/cricket"
-	someID  = "19435"
+	cacheID = "19435"
 )
 
-func NewEspnClient(client *http.Client) *EspnClient {
+func NewClient(client *http.Client) *EspnClient {
 	return &EspnClient{client}
 }
