@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"cricwatch/internal/core/domain"
 	scoreservice "cricwatch/internal/core/services"
 	"fmt"
 	"os"
@@ -19,7 +18,14 @@ var rootCmd = &cobra.Command{
 			fmt.Println("Initialization error")
 		}
 
-		err := svc.GetAndDisplayScore(domain.Match{ID: 1336129})
+		match, err := svc.SelectMatch()
+
+		if match.Live == false {
+			fmt.Println("This match is not live")
+			os.Exit(0)
+		}
+
+		err = svc.GetAndDisplayScore(match)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)

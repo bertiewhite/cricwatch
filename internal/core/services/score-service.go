@@ -8,16 +8,19 @@ import (
 type ScoreService struct {
 	ScoreRepo      ports.ScoreRepo
 	ScoreDisplayer ports.ScoreDisplayer
+	UserInput      ports.UserInput
 }
 
-func NewScoreService(scoreRepo ports.ScoreRepo, scoreDisplayer ports.ScoreDisplayer) *ScoreService {
+func NewScoreService(scoreRepo ports.ScoreRepo, scoreDisplayer ports.ScoreDisplayer, userInput ports.UserInput) *ScoreService {
 	return &ScoreService{
 		ScoreRepo:      scoreRepo,
 		ScoreDisplayer: scoreDisplayer,
+		UserInput:      userInput,
 	}
 }
 
 type ScoreApplication interface {
+	SelectMatch() (domain.Match, error)
 	GetAndDisplayScore(match domain.Match) error
 }
 
@@ -33,4 +36,18 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	}
 
 	return nil
+}
+
+func (s *ScoreService) SelectMatch() (domain.Match, error) {
+	matches, err := s.ScoreRepo.GetMatches()
+	if err != nil {
+		return domain.Match{}, err
+	}
+
+	match, err := s.UserInput.SelectMatch(matches)
+	if err != nil {
+		return domain.Match{}, err
+	}
+
+	return match, nil
 }

@@ -107,7 +107,7 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 	return score, nil
 }
 
-func (c *EspnClient) GetScore(match domain.Match) (domain.Score, error) {
+func (c *Client) GetScore(match domain.Match) (domain.Score, error) {
 	url, err := url.JoinPath(baseUrl, getScorePath)
 	if err != nil {
 		return domain.Score{}, err

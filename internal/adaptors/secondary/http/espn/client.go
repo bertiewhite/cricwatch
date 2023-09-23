@@ -2,7 +2,7 @@ package espn
 
 import "net/http"
 
-type EspnClient struct {
+type Client struct {
 	client *http.Client
 }
 
@@ -11,6 +11,6 @@ const (
 	cacheID = "19435"
 )
 
-func NewClient(client *http.Client) *EspnClient {
-	return &EspnClient{client}
+func NewClient(client *http.Client) *Client {
+	return &Client{client}
 }
