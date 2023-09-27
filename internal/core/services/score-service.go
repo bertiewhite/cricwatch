@@ -40,17 +40,15 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	defer s.ScoreDisplayer.Close()
 	t := time.Now()
 
+	// The rest of this function is dumb code for testing purposes when there's not a live match
 	sigintChan := make(chan os.Signal, 1)
-	// Could set jp.Done's channel to accept type os.Signal then we could just do Notify(jp.Done, os.interrupt). And
-	// handle the exiting of jobs more directly. But I prefer the re-usability and reduced specificity of this method.
 	signal.Notify(sigintChan, os.Interrupt)
-
 	for {
 		select {
 		case <-sigintChan:
 			return nil
 		default:
-			if time.Since(t) < time.Minute {
+			if time.Since(t) < 10*time.Second {
 				time.Sleep(1 * time.Second)
 				continue
 			}
@@ -68,8 +66,6 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 			}
 		}
 	}
-
-	return nil
 }
 
 func (s *ScoreService) SelectMatch() (domain.Match, error) {

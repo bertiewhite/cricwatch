@@ -21,7 +21,7 @@ func (ptd *PtermDisplayer) Display(score domain.Score) error {
 		ptd.area.Stop()
 	}
 
-	area, err := pterm.DefaultArea.WithCenter().Start()
+	area, err := pterm.DefaultArea.Start()
 	if err != nil {
 		return err
 	}

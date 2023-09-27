@@ -39,7 +39,6 @@ var rootCmd = &cobra.Command{
 var svc scoreservice.ScoreApplication
 
 func Execute(s scoreservice.ScoreApplication) {
-
 	svc = s
 
 	if err := rootCmd.Execute(); err != nil {
