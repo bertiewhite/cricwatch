@@ -32,6 +32,7 @@ var rootCmd = &cobra.Command{
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
+
 	},
 }
 

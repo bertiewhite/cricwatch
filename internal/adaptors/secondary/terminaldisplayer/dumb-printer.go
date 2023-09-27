@@ -17,3 +17,14 @@ func (dp *DumbPrinter) Display(score domain.Score) error {
 
 	return nil
 }
+
+func (dp *DumbPrinter) Update(score domain.Score) error {
+
+	fmt.Println(score.String())
+
+	return nil
+}
+
+func (dp *DumbPrinter) Close() error {
+	return nil
+}

@@ -3,6 +3,9 @@ package scoreservice
 import (
 	"cricwatch/internal/core/domain"
 	"cricwatch/internal/core/ports"
+	"os"
+	"os/signal"
+	"time"
 )
 
 type ScoreService struct {
@@ -33,6 +36,37 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	err = s.ScoreDisplayer.Display(score)
 	if err != nil {
 		return err
+	}
+	defer s.ScoreDisplayer.Close()
+	t := time.Now()
+
+	sigintChan := make(chan os.Signal, 1)
+	// Could set jp.Done's channel to accept type os.Signal then we could just do Notify(jp.Done, os.interrupt). And
+	// handle the exiting of jobs more directly. But I prefer the re-usability and reduced specificity of this method.
+	signal.Notify(sigintChan, os.Interrupt)
+
+	for {
+		select {
+		case <-sigintChan:
+			return nil
+		default:
+			if time.Since(t) < time.Minute {
+				time.Sleep(1 * time.Second)
+				continue
+			}
+			t = time.Now()
+			// score, err = s.ScoreRepo.GetScore(match)
+			// if err != nil {
+			// 	return err
+			// }
+
+			score.Home.Runs = score.Home.Runs + 1
+
+			err = s.ScoreDisplayer.Update(score)
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil
