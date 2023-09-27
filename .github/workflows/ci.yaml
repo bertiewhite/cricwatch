@@ -21,11 +21,12 @@ jobs:
       - name: Go get
         run: go get -v -t -d ./...
 
-      - name: Go build
-        env:
-          GOOS: linux
-          GOARCH: amd64
-        run: go build -o circwatch ./cmd/main.go
-
       - name: Go test
         run: go test -v ./...
+
+      # TODO: Artifact upload binaries?
+      # - name: Go build
+      #   env:
+      #     GOOS: linux
+      #     GOARCH: amd64
+      #   run: go build -o circwatch ./cmd/main.go
