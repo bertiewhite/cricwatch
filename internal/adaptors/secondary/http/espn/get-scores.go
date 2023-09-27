@@ -190,7 +190,7 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 				return domain.Score{}, err
 			}
 
-			batter := domain.Batsman{
+			batter := domain.Batters{
 				CurrentScore: domain.Runs(runs),
 				BallsFaced:   domain.Balls(balls),
 				Name:         domain.Name(athlete.Athlete.DisplayName),
@@ -198,9 +198,9 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 			}
 
 			if batter.Facing {
-				currentState.BatsmanA = batter
+				currentState.BatterA = batter
 			} else {
-				currentState.BatsmanB = batter
+				currentState.BatterB = batter
 			}
 
 		}
