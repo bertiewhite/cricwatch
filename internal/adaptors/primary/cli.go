@@ -20,10 +20,12 @@ var rootCmd = &cobra.Command{
 
 		match, err := svc.SelectMatch()
 
-		if match.Live == false {
-			fmt.Println("This match is not live")
-			os.Exit(0)
-		}
+		fmt.Println(fmt.Sprintf("Temp Debug: selected match id: %d", match.ID.Int()))
+
+		// if match.Live == false {
+		// 	fmt.Println("This match is not live")
+		// 	os.Exit(0)
+		// }
 
 		err = svc.GetAndDisplayScore(match)
 		if err != nil {

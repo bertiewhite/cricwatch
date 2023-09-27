@@ -7,6 +7,12 @@ type Overs struct {
 	balls int
 }
 
+type Balls int
+
+func NewBalls(balls int) Balls {
+	return Balls(balls)
+}
+
 func NewOvers(overs, balls int) Overs {
 	return Overs{overs, balls}
 }
