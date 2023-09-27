@@ -3,6 +3,9 @@ package scoreservice
 import (
 	"cricwatch/internal/core/domain"
 	"cricwatch/internal/core/ports"
+	"os"
+	"os/signal"
+	"time"
 )
 
 type ScoreService struct {
@@ -34,8 +37,35 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	if err != nil {
 		return err
 	}
+	defer s.ScoreDisplayer.Close()
+	t := time.Now()
 
-	return nil
+	// The rest of this function is dumb code for testing purposes when there's not a live match
+	sigintChan := make(chan os.Signal, 1)
+	signal.Notify(sigintChan, os.Interrupt)
+	for {
+		select {
+		case <-sigintChan:
+			return nil
+		default:
+			if time.Since(t) < 10*time.Second {
+				time.Sleep(1 * time.Second)
+				continue
+			}
+			t = time.Now()
+			// score, err = s.ScoreRepo.GetScore(match)
+			// if err != nil {
+			// 	return err
+			// }
+
+			score.Home.Runs = score.Home.Runs + 1
+
+			err = s.ScoreDisplayer.Update(score)
+			if err != nil {
+				return err
+			}
+		}
+	}
 }
 
 func (s *ScoreService) SelectMatch() (domain.Match, error) {

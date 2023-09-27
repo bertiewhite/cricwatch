@@ -12,10 +12,12 @@ import (
 func main() {
 
 	espnClient := espn.NewClient(http.DefaultClient)
-	dumPrinter := terminaldisplayer.NewDumbPrinter()
+	// dumPrinter := terminaldisplayer.NewDumbPrinter()
+	ptermOutput := terminaldisplayer.NewPtermDisplayer()
+
 	ptermInputter := pterminput.New()
 
-	svc := scoreservice.NewScoreService(espnClient, dumPrinter, ptermInputter)
+	svc := scoreservice.NewScoreService(espnClient, ptermOutput, ptermInputter)
 
 	cli.Execute(svc)
 }
