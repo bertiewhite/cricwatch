@@ -10,7 +10,7 @@ import (
 func (p *PTermInput) SelectMatch(matches domain.Matches) (domain.Match, error) {
 	var leagueOptions []string
 
-	for league, _ := range matches {
+	for league := range matches {
 		leagueOptions = append(leagueOptions, league.String())
 	}
 
