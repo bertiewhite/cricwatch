@@ -11,8 +11,8 @@ type TeamScore struct {
 }
 
 type CurrentState struct {
-	BatsmanA   Batsman
-	BatsmanB   Batsman
+	BatterA    Batters
+	BatterB    Batters
 	Bowler     Bowler
 	PrevBowler Bowler
 }
@@ -25,7 +25,7 @@ type Score struct {
 
 func (s *Score) String() string {
 	headerLine := fmt.Sprintf("%s %d-%d (%s) vs %s %d-%d (%s)", s.Home.Team, s.Home.Runs, s.Home.Wickets, s.Home.Overs.String(), s.Away.Team, s.Away.Runs, s.Away.Wickets, s.Away.Overs.String())
-	battingLine := fmt.Sprintf("%s %d (%d), %s %d (%d)", s.CurrentState.BatsmanA.Name, s.CurrentState.BatsmanA.CurrentScore, s.CurrentState.BatsmanA.BallsFaced, s.CurrentState.BatsmanB.Name, s.CurrentState.BatsmanB.CurrentScore, s.CurrentState.BatsmanB.BallsFaced)
+	battingLine := fmt.Sprintf("%s %d (%d), %s %d (%d)", s.CurrentState.BatterA.Name, s.CurrentState.BatterA.CurrentScore, s.CurrentState.BatterA.BallsFaced, s.CurrentState.BatterB.Name, s.CurrentState.BatterB.CurrentScore, s.CurrentState.BatterB.BallsFaced)
 	bowlingLine := fmt.Sprintf("%s: %s-%d-%d", s.CurrentState.Bowler.Name, s.CurrentState.Bowler.Over.String(), s.CurrentState.Bowler.Wickets, s.CurrentState.Bowler.Runs)
 	prevBowlingLine := fmt.Sprintf("%s: %s-%d-%d", s.CurrentState.PrevBowler.Name, s.CurrentState.PrevBowler.Over.String(), s.CurrentState.PrevBowler.Wickets, s.CurrentState.PrevBowler.Runs)
 
