@@ -279,7 +279,6 @@ func athleteStatString(athlete RosterAthlete, statname string) string {
 }
 
 func (c *Client) GetScore(match domain.Match) (domain.Score, error) {
-	fmt.Println(fmt.Sprintf("Temp Debug: using cache: %s", cacheID))
 	url, err := url.JoinPath(baseUrl, getScorePath)
 	if err != nil {
 		return domain.Score{}, err
