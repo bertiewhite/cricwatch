@@ -53,12 +53,10 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 				continue
 			}
 			t = time.Now()
-			// score, err = s.ScoreRepo.GetScore(match)
-			// if err != nil {
-			// 	return err
-			// }
-
-			score.Home.Runs = score.Home.Runs + 1
+			score, err = s.ScoreRepo.GetScore(match)
+			if err != nil {
+				return err
+			}
 
 			err = s.ScoreDisplayer.Update(score)
 			if err != nil {
