@@ -4,6 +4,7 @@ import (
 	"cricwatch/internal/core/domain"
 	"cricwatch/internal/core/ports"
 	"cricwatch/pkg/poller"
+	state "cricwatch/pkg/stateholder"
 	"fmt"
 	"os"
 	"os/signal"
@@ -30,6 +31,7 @@ type ScoreApplication interface {
 }
 
 func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
+	// get initial view
 	score, err := s.ScoreRepo.GetScore(match)
 	if err != nil {
 		return err
@@ -41,16 +43,17 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 	}
 	defer s.ScoreDisplayer.Close()
 
-	getAndDisplay := func() error {
+	// set up watcher to get subsequent views
+	stateHolder := state.New(score)
+	scoreWatcher := NewScoreWatcher(s.ScoreDisplayer, &stateHolder)
+	scoreWatcher.Start()
+
+	updateScore := func() error {
 		score, err = s.ScoreRepo.GetScore(match)
 		if err != nil {
 			return err
 		}
-
-		err = s.ScoreDisplayer.Update(score)
-		if err != nil {
-			return err
-		}
+		stateHolder.Update(score)
 		return nil
 	}
 
@@ -61,7 +64,7 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 		os.Exit(1)
 	}
 
-	poller := poller.NewPoller(getAndDisplay, errHandler)
+	poller := poller.NewPoller(updateScore, errHandler)
 
 	poller.Start(30 * time.Second)
 	sigintChan := make(chan os.Signal, 1)
