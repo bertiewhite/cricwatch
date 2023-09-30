@@ -3,6 +3,8 @@ package scoreservice
 import (
 	"cricwatch/internal/core/domain"
 	"cricwatch/internal/core/ports"
+	"cricwatch/pkg/poller"
+	"fmt"
 	"os"
 	"os/signal"
 	"time"
@@ -38,30 +40,38 @@ func (s *ScoreService) GetAndDisplayScore(match domain.Match) error {
 		return err
 	}
 	defer s.ScoreDisplayer.Close()
-	t := time.Now()
 
-	// The rest of this function is dumb code for testing purposes when there's not a live match
+	getAndDisplay := func() error {
+		score, err = s.ScoreRepo.GetScore(match)
+		if err != nil {
+			return err
+		}
+
+		err = s.ScoreDisplayer.Update(score)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+
+	errHandler := func(err error) {
+		fmt.Println(fmt.Sprintf("Uh oh something went wrong: %s", err.Error()))
+		_ = s.ScoreDisplayer.Close()
+
+		os.Exit(1)
+	}
+
+	poller := poller.NewPoller(getAndDisplay, errHandler)
+
+	poller.Start(30 * time.Second)
 	sigintChan := make(chan os.Signal, 1)
 	signal.Notify(sigintChan, os.Interrupt)
+
 	for {
 		select {
 		case <-sigintChan:
-			return nil
-		default:
-			if time.Since(t) < 10*time.Second {
-				time.Sleep(1 * time.Second)
-				continue
-			}
-			t = time.Now()
-			score, err = s.ScoreRepo.GetScore(match)
-			if err != nil {
-				return err
-			}
-
-			err = s.ScoreDisplayer.Update(score)
-			if err != nil {
-				return err
-			}
+			poller.Stop()
+			os.Exit(0)
 		}
 	}
 }
