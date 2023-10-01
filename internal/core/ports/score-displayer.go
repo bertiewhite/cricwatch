@@ -1,7 +1,7 @@
 package ports
 
 import (
-	"cricwatch/internal/core/domain"
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 )
 
 type ScoreDisplayer interface {

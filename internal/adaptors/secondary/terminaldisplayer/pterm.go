@@ -1,10 +1,11 @@
 package terminaldisplayer
 
 import (
-	"cricwatch/internal/core/domain"
 	"errors"
 	"fmt"
 	"strings"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 
 	"github.com/pterm/pterm"
 )

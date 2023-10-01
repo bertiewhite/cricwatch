@@ -1,14 +1,15 @@
 package scoreservice
 
 import (
-	"cricwatch/internal/core/domain"
-	"cricwatch/internal/core/ports"
-	"cricwatch/pkg/poller"
-	state "cricwatch/pkg/stateholder"
 	"fmt"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
+	"github.com/bertiewhite/cricwatch/internal/core/ports"
+	"github.com/bertiewhite/cricwatch/pkg/poller"
+	state "github.com/bertiewhite/cricwatch/pkg/stateholder"
 )
 
 type ScoreService struct {

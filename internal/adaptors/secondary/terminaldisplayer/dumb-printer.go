@@ -1,8 +1,9 @@
 package terminaldisplayer
 
 import (
-	"cricwatch/internal/core/domain"
 	"fmt"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 )
 
 type DumbPrinter struct{}

@@ -1,9 +1,9 @@
 package scoreservice
 
 import (
-	"cricwatch/internal/core/domain"
-	"cricwatch/internal/core/ports"
-	state "cricwatch/pkg/stateholder"
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
+	"github.com/bertiewhite/cricwatch/internal/core/ports"
+	state "github.com/bertiewhite/cricwatch/pkg/stateholder"
 )
 
 type ScoreWatcher struct {

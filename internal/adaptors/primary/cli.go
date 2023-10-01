@@ -1,11 +1,12 @@
 package cli
 
 import (
-	"cricwatch/internal/core/domain"
-	scoreservice "cricwatch/internal/core/services"
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
+	scoreservice "github.com/bertiewhite/cricwatch/internal/core/services"
 
 	"github.com/spf13/cobra"
 )

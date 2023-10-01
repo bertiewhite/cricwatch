@@ -1,4 +1,4 @@
-module cricwatch
+module github.com/bertiewhite/cricwatch
 
 go 1.21
 
