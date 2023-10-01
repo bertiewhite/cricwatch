@@ -1,4 +1,4 @@
-package cricwatch
+package main
 
 import (
 	"net/http"
