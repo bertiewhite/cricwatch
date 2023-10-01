@@ -1,12 +1,13 @@
 package main
 
 import (
-	cli "cricwatch/internal/adaptors/primary"
-	"cricwatch/internal/adaptors/secondary/http/espn"
-	"cricwatch/internal/adaptors/secondary/terminaldisplayer"
-	"cricwatch/internal/adaptors/secondary/userinput/pterminput"
-	scoreservice "cricwatch/internal/core/services"
 	"net/http"
+
+	cli "github.com/bertiewhite/cricwatch/internal/adaptors/primary"
+	"github.com/bertiewhite/cricwatch/internal/adaptors/secondary/http/espn"
+	"github.com/bertiewhite/cricwatch/internal/adaptors/secondary/terminaldisplayer"
+	"github.com/bertiewhite/cricwatch/internal/adaptors/secondary/userinput/pterminput"
+	scoreservice "github.com/bertiewhite/cricwatch/internal/core/services"
 )
 
 func main() {

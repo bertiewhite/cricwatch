@@ -1,6 +1,6 @@
 package ports
 
-import "cricwatch/internal/core/domain"
+import "github.com/bertiewhite/cricwatch/internal/core/domain"
 
 type UserInput interface {
 	SelectMatch(matches domain.Matches) (domain.Match, error)

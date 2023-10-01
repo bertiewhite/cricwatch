@@ -21,6 +21,8 @@ type Score struct {
 	Home         TeamScore
 	Away         TeamScore
 	CurrentState CurrentState
+	AllBowlers   []Bowler
+	AllBatters   []Batters
 }
 
 func (s *Score) String() string {

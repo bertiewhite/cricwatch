@@ -1,7 +1,13 @@
 package espn
 
+/*
+
+This file should absolutely be unit tested, it does a lot of busy extractions and setting
+up the code so it's unit testable would force it to be better written than the god awful
+mess it is now. That said no
+
+*/
 import (
-	"cricwatch/internal/core/domain"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 )
 
 var (
@@ -176,9 +184,6 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 		}
 
 		for _, athlete := range roster.Athletes {
-			if !athlete.Active {
-				continue
-			}
 
 			runs, err := athleteStat(athlete, "runs")
 			if err != nil {
@@ -197,6 +202,12 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 				Facing:       athlete.Facing(),
 			}
 
+			score.AllBatters = append(score.AllBatters, batter)
+
+			if !athlete.Active {
+				continue
+			}
+
 			if batter.Facing {
 				currentState.BatterA = batter
 			} else {
@@ -212,10 +223,6 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 		}
 
 		for _, athlete := range roster.Athletes {
-			if !athlete.Active {
-				continue
-			}
-
 			wickets, err := athleteStat(athlete, "wickets")
 			if err != nil {
 				return domain.Score{}, err
@@ -246,6 +253,10 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 				currentState.Bowler = bowler
 			} else if athlete.ActiveName == "previous bowler" {
 				currentState.PrevBowler = bowler
+			}
+
+			if overs+balls > 0 {
+				score.AllBowlers = append(score.AllBowlers, bowler)
 			}
 		}
 	}

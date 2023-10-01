@@ -1,8 +1,9 @@
 package pterminput
 
 import (
-	"cricwatch/internal/core/domain"
 	"errors"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 
 	"github.com/pterm/pterm"
 )

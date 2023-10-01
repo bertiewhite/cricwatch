@@ -1,12 +1,13 @@
 package espn
 
 import (
-	"cricwatch/internal/core/domain"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/bertiewhite/cricwatch/internal/core/domain"
 )
 
 const matchesEndpoint = "/scorepanel"
