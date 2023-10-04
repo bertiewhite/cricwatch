@@ -7,6 +7,7 @@ type Batters struct {
 	CurrentScore Runs
 	BallsFaced   Balls
 	Facing       bool
+	Out          bool
 }
 
 func (b Batters) String() string {

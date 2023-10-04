@@ -195,11 +195,17 @@ func (resp *GetScoreResponse) toScore() (domain.Score, error) {
 				return domain.Score{}, err
 			}
 
+			outs, err := athleteStat(athlete, "outs")
+			if err != nil {
+				return domain.Score{}, err
+			}
+
 			batter := domain.Batters{
 				CurrentScore: domain.Runs(runs),
 				BallsFaced:   domain.Balls(balls),
 				Name:         domain.Name(athlete.Athlete.DisplayName),
 				Facing:       athlete.Facing(),
+				Out:          outs == 1,
 			}
 
 			score.AllBatters = append(score.AllBatters, batter)
